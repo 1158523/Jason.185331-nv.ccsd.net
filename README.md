@@ -1,23 +1,18 @@
 # Jason.185331-nv.ccsd.net
 
-
 linear.c
-
 
 By Jason Stewart @ 2020
 
-
 A linear Regression Modeling Program
-
 
 AP Computer Science Principles Create Task Submission
 
-
 ~
-
 
 Program is free to use, but why you ever would want to is beyond me.
 
+linear is the executable file; makefile required to compile
 
 Characteristics
 
