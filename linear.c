@@ -59,6 +59,7 @@ void logMove(float n);
 void wipe(WINDOW *w);
 void color(int key, int fg, int bg);
 void createHeader(void);
+float *calcSum(void);
 
 
 //Names of our windows
@@ -494,20 +495,9 @@ void unload(struct node* head) {
 //calculate linear regression model and R values
 void calcRegression(void) {
 
-    float sum_x = 0, sum_x2 = 0, sum_y = 0, sum_y2 = 0, sum_xy = 0;
+    float *sums = calcSum();
 
-    //calculate sums of all values
-    node *curr = g.head;
-    while (curr != NULL) {
-        sum_x += curr->x;
-        sum_x2 += (curr->x * curr->x);
-        sum_y += curr->y;
-        sum_y2 += (curr->y * curr->y);
-        sum_xy += (curr->x * curr-> y);
-
-        //move onto the next node
-        curr = curr->next;
-    }
+    float sum_x = sums[0], sum_x2 = sums[1], sum_y = sums[2], sum_y2 = sums[3], sum_xy = sums[4];
 
     //calculate slope
     float a = (g.num_p * sum_xy - sum_x * sum_y) / (g.num_p * sum_x2 - sum_x * sum_x);
@@ -530,6 +520,26 @@ void calcRegression(void) {
 
 }
 
+//calculates the sums of the plot data for the linear regression model
+float *calcSum(void) {
+    
+    static float sums[5];
+
+    //calculate sums of all values
+    node *curr = g.head;
+    while (curr != NULL) {
+        sums[0] += curr->x;
+        sums[1] += (curr->x * curr->x);
+        sums[2] += curr->y;
+        sums[3] += (curr->y * curr->y);
+        sums[4] += (curr->x * curr-> y);
+
+        //move onto the next node
+        curr = curr->next;
+    }
+
+    return sums;
+}
 
 //prints the data to the display
 void displayData(float a, float b, float r, float r2) {
